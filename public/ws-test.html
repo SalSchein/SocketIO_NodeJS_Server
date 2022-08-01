@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Awaiting Connection...</h1>
+    <h3>Live Data Output:</h3>
+    <h4></h4>
+    <hr>
+    <h3>Data History:</h3>
+
+    <!--
+    higher socket.io-client versions than 2.5.0 dont work :(
+   <script src="https://unpkg.com/socket.io-client@4.5.1/build/cjs/index.js"></script>
+<script src="https://unpkg.com/socket.io-client@2.0.3/dist/socket.io.slim.js"></script>
+<script src="/socket.io.js"></script>
+   
+-->
+    <script src="https://unpkg.com/socket.io-client@2.5.0/dist/socket.io.js"></script>
+    <script>
+        const socket = new io(window.location.host, {
+            path: '/unresolved-notifications-socket'
+        });
+
+        const transport = socket.io.engine.transport.name; // in most cases, "polling"
+        console.log('socket.io: transport:', transport);
+        socket.io.engine.on("upgrade", () => {
+            const upgradedTransport = socket.io.engine.transport.name; // in most cases, "websocket"
+            console.log('socket.io: upgraded transport:', upgradedTransport);
+        });
+
+        socket.on('connect', () => {
+            console.log('socket connected to server!')
+            document.querySelector('h1').innerText = 'Connected!';
+        });
+        socket.on('unresolved-notifications', (data) => {
+            console.log('unresolved-notifications:', typeof data, data);
+
+            const p = document.createElement('p');
+            p.innerHTML = JSON.stringify(data);
+            document.body.appendChild(p);
+
+            document.querySelector('h4').innerText = JSON.stringify(data);
+        });
+    </script>
+</body>
+
+</html>

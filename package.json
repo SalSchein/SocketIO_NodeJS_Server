@@ -1,0 +1,17 @@
+{
+  "name": "central-server-unresolved-notifications-static",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joe Teglasi, Fledgling Technologies",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "internal-ip": "^7.0.0",
+    "server": "^1.0.37",
+    "socket.io": "^4.5.0"
+  }
+}
